@@ -38,7 +38,7 @@ def connect_to_database(host, database, user, password, port="5434"):
             host="localhost",
             database="STO",
             user="postgres",
-            password="petia2010",
+            password="password",
             port="5434"
         )
         print("Connection to database is successfull!")
