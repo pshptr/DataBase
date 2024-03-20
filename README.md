@@ -7,10 +7,10 @@
 #### Приложение предоставляет пользователю возможность взаимодействия с базой данных PostgreSQL. После запуска приложения пользователь видит главное окно, где доступно поле для ввода SQL- запроса и кнопка для его выполнения. Результат выполнения запроса отображается в текстовом поле ниже.
 
 ## Схема работы программы
-![Схема работы приложения](https://github.com/pshptr/DataBase/blob/main/assets/digrams/assets/block_schema.png)
+![Схема работы приложения](https://github.com/pshptr/DataBase/blob/main/assets/block_shema.png)
 
 ## Диаграмма классов программы
-![Диаграмма классов программы](https://github.com/pshptr/DataBase/blob/main/assets/digrams/assets/class.png)
+![Диаграмма классов программы](https://github.com/pshptr/DataBase/blob/main/assets/class.png)
 
 ## Листинг программы 
 
@@ -142,6 +142,6 @@ root.mainloop()
 ```
 
 ## Демонстрация работы программы
-![Демонстрация работы программы](https://github.com/pshptr/DataBase/blob/main/assets/digrams/assets/app.gif)
+![Демонстрация работы программы](https://github.com/pshptr/DataBase/blob/main/assets/app.gif)
 
 
