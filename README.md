@@ -92,7 +92,7 @@ result_label.grid(row=2, column=0, padx=10, pady=5)
 result_text.grid(row=3, column=0, columnspan=2, padx=10, pady=5)
 
 # Подключение к базе данных
-connection = connect_to_database("localhost", "STO", "postgres", "petia2010")
+connection = connect_to_database("localhost", "STO", "postgres", "password")
 
 # Создание кнопок для таблиц
 table_buttons_frame = tk.Frame(root)
