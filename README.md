@@ -1,5 +1,8 @@
 # Python App to interact with PostgreSQL Database
 
+### Демонстрация работы программы
+![Демонстрация работы программы](https://github.com/pshptr/DataBase/blob/main/assets/app.gif)
+
 ### Общее описание программы
  Для работы с базой данных было разработано приложение на языке Python. В качестве инструментов использовались библиотеки «psycopg2» для подключения к базе данных PostgreSQL и tkinter для создания графического интерфейса пользователя. Взаимодействие с базой данных осуществлялось с помощью языка SQL.
 
@@ -140,8 +143,3 @@ def submit_query(connection, query):
 # Запуск основного цикла приложен��я
 root.mainloop()
 ```
-
-### Демонстрация работы программы
-![Демонстрация работы программы](https://github.com/pshptr/DataBase/blob/main/assets/app.gif)
-
-
