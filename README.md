@@ -1,3 +1,5 @@
+```python
+
 import tkinter as tk
 from tkinter import messagebox
 import psycopg2
@@ -18,7 +20,7 @@ def connect_to_database(host, database, user, password, port="5434"):
             host="localhost",
             database="STO",
             user="postgres",
-            password="password",
+            password="petia2010",
             port="5434"
         )
         print("Connection to database is successfull!")
@@ -37,7 +39,11 @@ def execute_query(connection, query):
         return cursor.fetchall()  # Возвращаем результат запроса
     except (Exception, psycopg2.Error) as error:
         print(f"Error executing query: {error}")
+        connection.rollback()  # Откатываем транзакцию в случае ошибки
         return None
+    finally:
+        cursor.close()  # Закрываем курсор после выполнения запроса
+
 
 def show_table_names(connection):
     cursor = connection.cursor()
@@ -49,16 +55,6 @@ def show_table_names(connection):
     for table_name in table_names:
         result_text.insert(tk.END, f"{table_name}\n")
 
-def show_table_structure(connection, table_name):
-    cursor = connection.cursor()
-    cursor.execute(f"SELECT column_name, data_type FROM information_schema.columns WHERE table_name = '{table_name}'")
-    table_structure = cursor.fetchall()
-    cursor.close()
-
-    result_text.delete(1.0, tk.END)
-    for row in table_structure:
-        result_text.insert(tk.END, f"{row}\n")
-
 # Создание основного окна
 root = tk.Tk()
 root.title("Database App")
@@ -68,7 +64,7 @@ query_label = tk.Label(root, text="Enter SQL-query:")
 query_entry = tk.Entry(root, width=50)
 submit_button = tk.Button(root, text="Execute query", command=lambda: submit_query(connection, query_entry.get()))
 result_label = tk.Label(root, text="Result:")
-result_text = tk.Text(root, width=50, height=10)
+result_text = tk.Text(root, width=75, height=30)
 
 # Размещение виджетов на окне
 query_label.grid(row=0, column=0, padx=10, pady=5)
@@ -84,7 +80,7 @@ connection = connect_to_database("localhost", "STO", "postgres", "petia2010")
 table_buttons_frame = tk.Frame(root)
 table_buttons_frame.grid(row=4, column=0, columnspan=2, padx=10, pady=5)
 
-for table_name in ['car', 'client', 'order', 'service', 'mechanic', 'service_stations', 'order_service']:
+for table_name in ['car', 'client', 'orders', 'service', 'mechanic', 'service_stations', 'order_service']:
     button = tk.Button(table_buttons_frame, text=table_name, command=lambda t=table_name: show_table_data(connection, f"SELECT * FROM {t}"))
     button.pack(side=tk.LEFT, padx=5, pady=5)
 
@@ -93,8 +89,16 @@ def show_table_data(connection, query):
     result = execute_query(connection, query)
     if result is not None:
         result_text.delete(1.0, tk.END)
+        # Выводим имена полей таблицы
+        cursor = connection.cursor()
+        cursor.execute(query)
+        field_names = [field[0] for field in cursor.description]
+        result_text.insert(tk.END, '\t'.join(field_names))
+        result_text.insert(tk.END, '\n')
+        cursor.close()
+        # Выводим данные
         for row in result:
-            result_text.insert(tk.END, row)
+            result_text.insert(tk.END, '\t'.join(map(str, row)))
             result_text.insert(tk.END, '\n')
     else:
         messagebox.showerror("Error", "Error executing query")
@@ -103,11 +107,22 @@ def submit_query(connection, query):
     result = execute_query(connection, query)
     if result is not None:
         result_text.delete(1.0, tk.END)
+        # Выводим имена полей таблицы
+        cursor = connection.cursor()
+        cursor.execute(query)
+        field_names = [field[0] for field in cursor.description]
+        result_text.insert(tk.END, '\t'.join(field_names))
+        result_text.insert(tk.END, '\n')
+        cursor.close()
+        # Выводим данные
         for row in result:
-            result_text.insert(tk.END, row)
+            result_text.insert(tk.END, '\t'.join(map(str, row)))
             result_text.insert(tk.END, '\n')
     else:
         messagebox.showerror("Error", "Error executing query")
 
+
 # Запуск основного цикла приложен��я
 root.mainloop()
+
+```
